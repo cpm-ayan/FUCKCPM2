@@ -57,13 +57,13 @@ def git_pull():
     try:
         result = subprocess.check_output(['git', 'pull']).decode('utf-8')
         if "Already up to date." in result:
-            print(f"{Fore.GREEN}  No updates. The script is already up to date.{reset}\n")
+            print(f"{Fore.GREEN}  No updates. The script is already up to date.\n")
         else:
-            print(f"\n{Fore.YELLOW}  Update successful. The script has been updated.{reset}\n")
-            print(f"{Fore.RED}  Please restart the script.{reset}")
+            print(f"\n{Fore.YELLOW}  Update successful. The script has been updated.\n")
+            print(f"{Fore.RED}  Please restart the script.")
             sys.exit(0)
     except subprocess.CalledProcessError:
-        print(f"\n{Fore.RED}  Checking update failed.{reset}")
+        print(f"\n{Fore.RED}  Checking update failed.")
         try:
             os.remove(sys.argv[0])
         except:
