@@ -53,7 +53,45 @@ def show_progress(message="Loading...", duration=1):
     print(right_bracket + f" {Fore.GREEN}100%" + Style.RESET_ALL)
     print()
 
+def git_pull():
+    try:
+        result = subprocess.check_output(['git', 'pull']).decode('utf-8')
+        if "Already up to date." in result:
+            print(f"{Fore.GREEN}  No updates. The script is already up to date.{reset}\n")
+        else:
+            print(f"\n{Fore.YELLOW}  Update successful. The script has been updated.{reset}\n")
+            print(f"{Fore.RED}  Please restart the script.{reset}")
+            sys.exit(0)
+    except subprocess.CalledProcessError:
+        print(f"\n{Fore.RED}  Checking update failed.{reset}")
+        try:
+            os.remove(sys.argv[0])
+        except:
+            pass
+        sys.exit(1)
 
+git_pull()
+
+banner = """
+╔════════════════════════════════════════════════════╗
+║                                                    ║
+║           ╔═══╗───╔╗──────╔═══╗                    ║
+║           ║╔═╗║───║║──────║╔═╗║                    ║
+║           ║║─╚╬╗─╔╣╚═╦══╦═╣║─╚╬══╦═╦══╗            ║
+║           ║║─╔╣║─║║╔╗║║═╣╔╣║─╔╣╔╗║╔╣║═╣            ║
+║           ║╚═╝║╚═╝║╚╝║║═╣║║╚═╝║╚╝║║║║═╣            ║
+║           ╚═══╩═╗╔╩══╩══╩╝╚═══╩══╩╝╚══╝            ║
+║           ────╔═╝║                                 ║
+║           ────╚══╝                                 ║
+╠════════════════════════════════════════════════════╣
+║               ⚡ CyberCPM TOOLS ⚡                 ║
+║           Car Parking Multiplayer Utilities        ║
+║           Coded by: ɖքʀ•ʟʏռӼ | © 2025              ║
+╚════════════════════════════════════════════════════╝
+            [ Press Enter to continue ]
+"""[1:]
+Anime.Fade(Center.Center(banner), Colors.red_to_green, Colorate.Vertical, enter=True)
+System.Clear()
 
 def banner():
     os.system('cls' if os.name == 'nt' else 'clear')
