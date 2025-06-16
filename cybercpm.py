@@ -1,10 +1,11 @@
 import requests
+import os
+import json
 from time import sleep
 
-# Copyright (C) Lynx <DPR_LynX_Lovers> - All Rights Reserved
-# Unauthorized copying of this file, via any medium is strictly prohibited
-# Proprietary and confidential
-# Written by Lynx <DPR_LynX_Lovers>, 09, juli, 2024.
+# © Lynx | DPR_LynX_Lovers — 2025
+# No stealing. No tracing. No funny business.
+# Engineered in the shadows by DPRLynX on June 16th, 2025
 
 BASE_URL: str = "https://cybercpm.store/api"
 
@@ -13,6 +14,7 @@ class CyberCPM:
     def __init__(self, access_key) -> None:
         self.auth_token = None
         self.access_key = access_key
+        self.datapath = "dataplayer/cars"
     
     def login(self, email, password) -> int:
         payload = { "account_email": email, "account_password": password }
@@ -23,11 +25,6 @@ class CyberCPM:
             self.auth_token = response_decoded.get("auth")
         return response_decoded.get("error")
 
-    def delete(self):
-        payload = { "account_auth": self.auth_token }
-        params = { "key": self.access_key }
-        requests.post(f"{BASE_URL}/account_delete", params=params, data=payload)
-
     def get_player_data(self) -> any:
         payload = { "account_auth": self.auth_token }
         params = { "key": self.access_key }
@@ -35,125 +32,212 @@ class CyberCPM:
         response_decoded = response.json()
         return response_decoded
     
-    def set_player_rank(self) -> bool:
-        payload = { "account_auth": self.auth_token }
-        params = { "key": self.access_key }
-        response = requests.post(f"{BASE_URL}/set_rank", params=params, data=payload)
-        response_decoded = response.json()
-        return response_decoded.get("ok")
-    
     def get_key_data(self) -> any:
         params = { "key": self.access_key }
         response = requests.get(f"{BASE_URL}/get_key_data", params=params)
         response_decoded = response.json()
         return response_decoded
-    
-    def set_player_money(self, amount) -> bool:
+ 
+    def save_player_car(self, car_data: dict) -> bool:
+        url = f"{BASE_URL}/set_car"
+        params = {"key": self.access_key}
+        payload = {
+            "account_auth": self.auth_token,
+            "content": car_data
+        }
+        response = requests.post(url, params=params, json=payload)
+        try:
+            response_decoded = response.json()
+            return response_decoded.get("ok", False)
+        except Exception:
+            return False
+          
+    def save_player_money(self, amount) -> bool:
         payload = {
             "account_auth": self.auth_token,
             "amount": amount
         }
         params = { "key": self.access_key }
-        response = requests.post(f"{BASE_URL}/set_money", params=params, data=payload)
+        response = requests.post(f"{BASE_URL}/save_money", params=params, data=payload)
         response_decoded = response.json()
         return response_decoded.get("ok")
     
-    def set_player_coins(self, amount) -> bool:
-        payload = {
-            "account_auth": self.auth_token,
-            "amount": amount
-        }
-        params = { "key": self.access_key }
-        response = requests.post(f"{BASE_URL}/set_coins", params=params, data=payload)
-        response_decoded = response.json()
-        return response_decoded.get("ok")
-    
-    def set_player_name(self, name) -> bool:
+    def save_player_name(self, name) -> bool:
         payload = { "account_auth": self.auth_token, "name": name }
         params = { "key": self.access_key }
-        response = requests.post(f"{BASE_URL}/set_name", params=params, data=payload)
+        response = requests.post(f"{BASE_URL}/save_name", params=params, data=payload)
         response_decoded = response.json()
         return response_decoded.get("ok")
     
-    def set_player_localid(self, id) -> bool:
-        payload = { "account_auth": self.auth_token, "id": id }
+    def levels_done(self) -> bool:
+        payload = { "account_auth": self.auth_token }
         params = { "key": self.access_key }
-        response = requests.post(f"{BASE_URL}/set_id", params=params, data=payload)
-        response_decoded = response.json()
-        return response_decoded.get("ok")
-
-    def get_player_car(self, car_id) -> any:
-        payload = { "account_auth": self.auth_token, "car_id": car_id }
-        params = { "key": self.access_key }
-        response = requests.post(f"{BASE_URL}/get_car", params=params, data=payload)
+        response = requests.post(f"{BASE_URL}/levels_done", params=params, data=payload)
         response_decoded = response.json()
         return response_decoded.get("ok")
     
-    def delete_player_friends(self) -> bool:
+    def face_male(self) -> bool:
         payload = { "account_auth": self.auth_token }
         params = { "key": self.access_key }
-        response = requests.post(f"{BASE_URL}/delete_friends", params=params, data=payload)
+        response = requests.post(f"{BASE_URL}/face_male", params=params, data=payload)
         response_decoded = response.json()
         return response_decoded.get("ok")
 
-    def full_unlock(self) -> bool:
+    def face_female(self) -> bool:
         payload = { "account_auth": self.auth_token }
         params = { "key": self.access_key }
-        response = requests.post(f"{BASE_URL}/full_unlock", params=params, data=payload)
+        response = requests.post(f"{BASE_URL}/face_female", params=params, data=payload)
         response_decoded = response.json()
         return response_decoded.get("ok")
 
-    def set_player_wins(self, amount) -> bool:
+    def attribute_male(self) -> bool:
+        payload = { "account_auth": self.auth_token }
+        params = { "key": self.access_key }
+        response = requests.post(f"{BASE_URL}/attribute_male", params=params, data=payload)
+        response_decoded = response.json()
+        return response_decoded.get("ok")
+
+    def attribute_female(self) -> bool:
+        payload = { "account_auth": self.auth_token }
+        params = { "key": self.access_key }
+        params = { "key": self.access_key }
+        response = requests.post(f"{BASE_URL}/attribute_female", params=params, data=payload)
+        response_decoded = response.json()
+        return response_decoded.get("ok")
+
+    def all_animations_unlocked(self) -> bool:
+        payload = { "account_auth": self.auth_token }
+        params = { "key": self.access_key }
+        response = requests.post(f"{BASE_URL}/all_animations_unlocked", params=params, data=payload)
+        response_decoded = response.json()
+        return response_decoded.get("ok")
+    
+    def all_home_unlocked(self) -> bool:
+        payload = { "account_auth": self.auth_token }
+        params = { "key": self.access_key }
+        response = requests.post(f"{BASE_URL}/all_home_unlocked", params=params, data=payload)
+        response_decoded = response.json()
+        return response_decoded.get("ok")
+    
+    def all_paint_unlocked(self) -> bool:
+        payload = { "account_auth": self.auth_token }
+        params = { "key": self.access_key }
+        response = requests.post(f"{BASE_URL}/all_paint_unlocked", params=params, data=payload)
+        response_decoded = response.json()
+        return response_decoded.get("ok")
+
+    def all_wheels_unlocked(self) -> bool:
+        payload = { "account_auth": self.auth_token }
+        params = { "key": self.access_key }
+        response = requests.post(f"{BASE_URL}/all_wheels_unlocked", params=params, data=payload)
+        response_decoded = response.json()
+        return response_decoded.get("ok")
+    
+    def all_calipers_unlocked(self) -> bool:
+        payload = { "account_auth": self.auth_token }
+        params = { "key": self.access_key }
+        response = requests.post(f"{BASE_URL}/all_calipers_unlocked", params=params, data=payload)
+        response_decoded = response.json()
+        return response_decoded.get("ok")
+
+    def unlocked_police(self, car_data) -> bool:
         payload = {
             "account_auth": self.auth_token,
-            "amount": amount
+            "car_data": json.dumps(car_data)
         }
         params = { "key": self.access_key }
-        response = requests.post(f"{BASE_URL}/set_race_wins", params=params, data=payload)
+        response = requests.post(f"{BASE_URL}/unlocked_police", params=params, data=payload)
         response_decoded = response.json()
         return response_decoded.get("ok")
-
-    def set_player_loses(self, amount) -> bool:
+    
+    def all_sound_police_unlocked(self) -> bool:
+        payload = { "account_auth": self.auth_token }
+        params = { "key": self.access_key }
+        response = requests.post(f"{BASE_URL}/all_sound_police_unlocked", params=params, data=payload)
+        response_decoded = response.json()
+        return response_decoded.get("ok")
+        
+    def unlocked_bodykits(self, car_data) -> bool:
         payload = {
             "account_auth": self.auth_token,
-            "amount": amount
+            "car_data": json.dumps(car_data)
         }
         params = { "key": self.access_key }
-        response = requests.post(f"{BASE_URL}/set_race_loses", params=params, data=payload)
+        response = requests.post(f"{BASE_URL}/unlocked_bodykits", params=params, data=payload)
         response_decoded = response.json()
         return response_decoded.get("ok")
 
-    def unlock_paid_cars(self) -> bool:
-        payload = { "account_auth": self.auth_token }
+    def swap_gearbox_awd(self, car_data) -> bool:
+        payload = {
+            "account_auth": self.auth_token,
+            "car_data": json.dumps(car_data)
+        }
         params = { "key": self.access_key }
-        response = requests.post(f"{BASE_URL}/unlock_paid_cars", params=params, data=payload)
+        response = requests.post(f"{BASE_URL}/swap_gearbox_awd", params=params, data=payload)
         response_decoded = response.json()
         return response_decoded.get("ok")
-    
-    def unlock_all_cars(self) -> bool:
-        payload = { "account_auth": self.auth_token }
-        params = { "key": self.access_key }
-        response = requests.post(f"{BASE_URL}/unlock_all_cars", params=params, data=payload)
+        
+    def download_all_resources(self) -> bool:
+        payload = {"car_data": "{}"}
+        params = {"key": self.access_key}
+        response = requests.post(f"{BASE_URL}/download_resource", params=params, data=payload)
         response_decoded = response.json()
-        return response_decoded.get("ok")
-    
-    def unlock_all_cars_siren(self) -> bool:
-        payload = { "account_auth": self.auth_token }
-        params = { "key": self.access_key }
-        response = requests.post(f"{BASE_URL}/unlock_all_cars_siren", params=params, data=payload)
-        response_decoded = response.json()
-        return response_decoded.get("ok")
+        if not response_decoded.get("ok"):
+            return False
+        cars = response_decoded.get("data", [])
+        os.makedirs("datacars/cars", exist_ok=True)
+        for i, car in enumerate(cars, 1):
+            path = f"datacars/cars/{i}"
+            with open(path, "w") as f:
+                json.dump(car, f, indent=2)
+        return True
 
-    def tune_up(self) -> bool:
+    def get_all_player_cars(self) -> any:
         payload = { "account_auth": self.auth_token }
         params = { "key": self.access_key }
-        response = requests.post(f"{BASE_URL}/tune_up", params=params, data=payload)
+        response = requests.post(f"{BASE_URL}/get_all_cars", params=params, data=payload)
         response_decoded = response.json()
-        return response_decoded.get("ok")
-    
-    def account_clone(self, account_email, account_password) -> bool:
-        payload = { "account_auth": self.auth_token, "account_email": account_email, "account_password": account_password }
-        params = { "key": self.access_key }
-        response = requests.post(f"{BASE_URL}/clone", params=params, data=payload)
-        response_decoded = response.json()
-        return response_decoded.get("ok")
+        if response_decoded.get("ok"):
+            datacar = response_decoded.get("datacar", {})
+            folder = "dataplayer/cars"
+            if not os.path.exists(folder):
+                os.makedirs(folder)
+            else:
+                for f in os.listdir(folder):
+                    os.remove(os.path.join(folder, f))
+            for car_id, car_data in datacar.items():
+                filename = os.path.join(folder, car_id)
+                with open(filename, "w", encoding="utf-8") as f:
+                    json.dump(car_data, f, indent=4, ensure_ascii=False)
+            return datacar
+        return None
+
+    def save_player_slots_collection(self) -> bool:
+        car_instance_ids = []
+        for filename in os.listdir(self.datapath):
+            if filename.isdigit():
+                file_path = os.path.join(self.datapath, filename)
+                try:
+                    with open(file_path, "r", encoding="utf-8") as file:
+                        content = json.load(file)
+                        car_instance_id = content.get("data", {}).get("CarInstanceId")
+                        if car_instance_id:
+                            car_instance_ids.append(car_instance_id)
+                except:
+                    continue
+        if not car_instance_ids:
+            return False
+        car_dict = {str(i): cid for i, cid in enumerate(car_instance_ids)}
+        data_json_str = json.dumps(car_dict, ensure_ascii=False)
+        url = f"{BASE_URL}/set_slots_collection"
+        params = {"key": self.access_key}
+        payload = {
+            "account_auth": self.auth_token,
+            "data": data_json_str
+        }
+        try:
+            response = requests.post(url, params=params, json=payload)
+            result = response.json()
+            return result.get("ok", False)
+        except:
+            return False
