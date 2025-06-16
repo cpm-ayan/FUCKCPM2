@@ -53,26 +53,7 @@ def show_progress(message="Loading...", duration=1):
     print(right_bracket + f" {Fore.GREEN}100%" + Style.RESET_ALL)
     print()
 
-banner = """
-╔════════════════════════════════════════════════════╗
-║                                                    ║
-║           ╔═══╗───╔╗──────╔═══╗                    ║
-║           ║╔═╗║───║║──────║╔═╗║                    ║
-║           ║║─╚╬╗─╔╣╚═╦══╦═╣║─╚╬══╦═╦══╗            ║
-║           ║║─╔╣║─║║╔╗║║═╣╔╣║─╔╣╔╗║╔╣║═╣            ║
-║           ║╚═╝║╚═╝║╚╝║║═╣║║╚═╝║╚╝║║║║═╣            ║
-║           ╚═══╩═╗╔╩══╩══╩╝╚═══╩══╩╝╚══╝            ║
-║           ────╔═╝║                                 ║
-║           ────╚══╝                                 ║
-╠════════════════════════════════════════════════════╣
-║               ⚡ CyberCPM TOOLS ⚡                 ║
-║           Car Parking Multiplayer Utilities        ║
-║           Coded by: ɖքʀ•ʟʏռӼ | © 2025              ║
-╚════════════════════════════════════════════════════╝
-            [ Press Enter to continue ]
-"""[1:]
-Anime.Fade(Center.Center(banner), Colors.red_to_green, Colorate.Vertical, enter=True)
-System.Clear()
+
 
 def banner():
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -228,308 +209,435 @@ if __name__ == "__main__":
                     print(f"{Fore.RED}  Invalid input.")
                 print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
                 sleep(2)
-
+            
             elif choice == "02":
+                key_data = cpm.get_key_data()
+                is_unlimited = key_data.get("is_unlimited", False)
+                coins = key_data.get("coins", 0)
+                required_coins = 3000
                 print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
                 print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Enter your desired amount of money.")
                 print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Max 50,000,000.")
                 amount = prompt_valid_value(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Money", "Money")
-                print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Processing... ", end="")
-                if amount.isdigit() and 0 < int(amount) <= 50000000:
-                    if cpm.save_player_money(amount):
-                        show_progress(f" Applying changes...", duration=2)
+                if not is_unlimited and coins < required_coins:
+                    print(f"{Fore.RED}  ---[{Style.RESET_ALL} Balance tidak mencukupi. Diperlukan {required_coins} koin.")
+                else:
+                    print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Processing... ", end="")
+                    if amount.isdigit() and 0 < int(amount) <= 50000000:
+                        if cpm.save_player_money(amount):
+                            show_progress(f" Applying changes...", duration=2)
+                            print(f"{Fore.GREEN}  ---[{Style.RESET_ALL} Successfuly!")
+                        else:
+                            print(f"{Fore.RED}  ---[{Style.RESET_ALL} Failed.")
+                    else:
+                        print(f"{Fore.RED}  Invalid amount.")
+                print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
+                sleep(2)
+            
+            elif choice == "03":
+                key_data = cpm.get_key_data()
+                is_unlimited = key_data.get("is_unlimited", False)
+                coins = key_data.get("coins", 0)
+                required_coins = 10000
+                print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
+                print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Complete all levels.")
+                if not is_unlimited and coins < required_coins:
+                    print(f"{Fore.RED}  ---[{Style.RESET_ALL} Balance tidak mencukupi. Diperlukan {required_coins} koin.")
+                else:
+                    print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Processing... ", end="")
+                    if cpm.levels_done():
+                        show_progress(f" Applying...", duration=2)
                         print(f"{Fore.GREEN}  ---[{Style.RESET_ALL} Successfuly!")
                     else:
                         print(f"{Fore.RED}  ---[{Style.RESET_ALL} Failed.")
-                else:
-                    print(f"{Fore.RED}  Invalid amount.")
                 print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
                 sleep(2)
-
-            elif choice == "03":
-                print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
-                print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Complete all levels.")
-                print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Processing... ", end="")
-                if cpm.levels_done():
-                    show_progress(f" Applying...", duration=2)
-                    print(f"{Fore.GREEN}  ---[{Style.RESET_ALL} Successfuly!")
-                else:
-                    print(f"{Fore.RED}  ---[{Style.RESET_ALL} Failed.")
-                print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
-                sleep(2)
-
+            
             elif choice == "04":
+                key_data = cpm.get_key_data()
+                is_unlimited = key_data.get("is_unlimited", False)
+                coins = key_data.get("coins", 0)
+                required_coins = 3000
                 print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
                 print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Remove male face.")
-                print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Processing... ", end="")
-                if cpm.face_male():
-                    show_progress(f" Removing...", duration=2)
-                    print(f"{Fore.GREEN}  ---[{Style.RESET_ALL} Successfuly!")
+                if not is_unlimited and coins < required_coins:
+                    print(f"{Fore.RED}  ---[{Style.RESET_ALL} Balance tidak mencukupi. Diperlukan {required_coins} koin.")
                 else:
-                    print(f"{Fore.RED}  ---[{Style.RESET_ALL} Failed.")
+                    print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Processing... ", end="")
+                    if cpm.face_male():
+                        show_progress(f" Removing...", duration=2)
+                        print(f"{Fore.GREEN}  ---[{Style.RESET_ALL} Successfully!")
+                    else:
+                        print(f"{Fore.RED}  ---[{Style.RESET_ALL} Failed.")
                 print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
                 sleep(2)
-
+            
             elif choice == "05":
+                key_data = cpm.get_key_data()
+                is_unlimited = key_data.get("is_unlimited", False)
+                coins = key_data.get("coins", 0)
+                required_coins = 3000
                 print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
                 print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Remove female face.")
-                print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Processing... ", end="")
-                if cpm.face_female():
-                    show_progress(f" Removing...", duration=2)
-                    print(f"{Fore.GREEN}  ---[{Style.RESET_ALL} Successfuly!")
+                if not is_unlimited and coins < required_coins:
+                    print(f"{Fore.RED}  ---[{Style.RESET_ALL} Balance tidak mencukupi. Diperlukan {required_coins} koin.")
                 else:
-                    print(f"{Fore.RED}  ---[{Style.RESET_ALL} Failed.")
+                    print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Processing... ", end="")
+                    if cpm.face_female():
+                        show_progress(f" Removing...", duration=2)
+                        print(f"{Fore.GREEN}  ---[{Style.RESET_ALL} Successfuly!")
+                    else:
+                        print(f"{Fore.RED}  ---[{Style.RESET_ALL} Failed.")
                 print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
                 sleep(2)
-
+            
             elif choice == "06":
+                key_data = cpm.get_key_data()
+                is_unlimited = key_data.get("is_unlimited", False)
+                coins = key_data.get("coins", 0)
+                required_coins = 15000
                 print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
                 print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Unlock all male attributes.")
-                print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Processing... ", end="")
-                if cpm.attribute_male():
-                    show_progress(f" Unlocking...", duration=2)
-                    print(f"{Fore.GREEN}  ---[{Style.RESET_ALL} Successfuly!")
+                if not is_unlimited and coins < required_coins:
+                    print(f"{Fore.RED}  ---[{Style.RESET_ALL} Balance tidak mencukupi. Diperlukan {required_coins} koin.")
                 else:
-                    print(f"{Fore.RED}  ---[{Style.RESET_ALL} Failed.")
+                    print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Processing... ", end="")
+                    if cpm.attribute_male():
+                        show_progress(f" Unlocking...", duration=2)
+                        print(f"{Fore.GREEN}  ---[{Style.RESET_ALL} Successfuly!")
+                    else:
+                        print(f"{Fore.RED}  ---[{Style.RESET_ALL} Failed.")
                 print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
                 sleep(2)
-
+            
             elif choice == "07":
+                key_data = cpm.get_key_data()
+                is_unlimited = key_data.get("is_unlimited", False)
+                coins = key_data.get("coins", 0)
+                required_coins = 15000
                 print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
                 print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Unlock all female attributes.")
-                print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Processing... ", end="")
-                if cpm.attribute_female():
-                    show_progress(f" Unlocking...", duration=2)
-                    print(f"{Fore.GREEN}  ---[{Style.RESET_ALL} Successfuly!")
+                if not is_unlimited and coins < required_coins:
+                    print(f"{Fore.RED}  ---[{Style.RESET_ALL} Balance tidak mencukupi. Diperlukan {required_coins} koin.")
                 else:
-                    print(f"{Fore.RED}  ---[{Style.RESET_ALL} Failed.")
+                    print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Processing... ", end="")
+                    if cpm.attribute_female():
+                        show_progress(f" Unlocking...", duration=2)
+                        print(f"{Fore.GREEN}  ---[{Style.RESET_ALL} Successfuly!")
+                    else:
+                        print(f"{Fore.RED}  ---[{Style.RESET_ALL} Failed.")
                 print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
                 sleep(2)
-
+            
             elif choice == "08":
+                key_data = cpm.get_key_data()
+                is_unlimited = key_data.get("is_unlimited", False)
+                coins = key_data.get("coins", 0)
+                required_coins = 15000
                 print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
                 print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Unlock all animations.")
-                print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Processing... ", end="")
-                if cpm.all_animations_unlocked():
-                    show_progress(f" Unlocking...", duration=2)
-                    print(f"{Fore.GREEN}  ---[{Style.RESET_ALL} Successfuly!")
+                if not is_unlimited and coins < required_coins:
+                    print(f"{Fore.RED}  ---[{Style.RESET_ALL} Balance tidak mencukupi. Diperlukan {required_coins} koin.")
                 else:
-                    print(f"{Fore.RED}  ---[{Style.RESET_ALL} Failed.")
+                    print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Processing... ", end="")
+                    if cpm.all_animations_unlocked():
+                        show_progress(f" Unlocking...", duration=2)
+                        print(f"{Fore.GREEN}  ---[{Style.RESET_ALL} Successfuly!")
+                    else:
+                        print(f"{Fore.RED}  ---[{Style.RESET_ALL} Failed.")
                 print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
                 sleep(2)
-
+            
             elif choice == "09":
+                key_data = cpm.get_key_data()
+                is_unlimited = key_data.get("is_unlimited", False)
+                coins = key_data.get("coins", 0)
+                required_coins = 20000
                 print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
                 print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Unlock all homes.")
-                print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Processing... ", end="")
-                if cpm.all_home_unlocked():
-                    show_progress(f" Unlocking...", duration=2)
-                    print(f"{Fore.GREEN}  ---[{Style.RESET_ALL} Successfuly!")
+                if not is_unlimited and coins < required_coins:
+                    print(f"{Fore.RED}  ---[{Style.RESET_ALL} Balance tidak mencukupi. Diperlukan {required_coins} koin.")
                 else:
-                    print(f"{Fore.RED}  ---[{Style.RESET_ALL} Failed.")
+                    print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Processing... ", end="")
+                    if cpm.all_home_unlocked():
+                        show_progress(f" Unlocking...", duration=2)
+                        print(f"{Fore.GREEN}  ---[{Style.RESET_ALL} Successfuly!")
+                    else:
+                        print(f"{Fore.RED}  ---[{Style.RESET_ALL} Failed.")
                 print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
                 sleep(2)
-
+            
             elif choice == "10":
+                key_data = cpm.get_key_data()
+                is_unlimited = key_data.get("is_unlimited", False)
+                coins = key_data.get("coins", 0)
+                required_coins = 15000
                 print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
                 print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Unlock all paints.")
-                print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Processing... ", end="")
-                if cpm.all_paints_unlocked():
-                    show_progress(f" Unlocking...", duration=2)
-                    print(f"{Fore.GREEN}  ---[{Style.RESET_ALL} Successfuly!")
+                if not is_unlimited and coins < required_coins:
+                    print(f"{Fore.RED}  ---[{Style.RESET_ALL} Balance tidak mencukupi. Diperlukan {required_coins} koin.")
                 else:
-                    print(f"{Fore.RED}  ---[{Style.RESET_ALL} Failed.")
+                    print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Processing... ", end="")
+                    if cpm.all_paints_unlocked():
+                        show_progress(f" Unlocking...", duration=2)
+                        print(f"{Fore.GREEN}  ---[{Style.RESET_ALL} Successfuly!")
+                    else:
+                        print(f"{Fore.RED}  ---[{Style.RESET_ALL} Failed.")
                 print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
                 sleep(2)
-
+            
             elif choice == "11":
+                key_data = cpm.get_key_data()
+                is_unlimited = key_data.get("is_unlimited", False)
+                coins = key_data.get("coins", 0)
+                required_coins = 15000
                 print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
                 print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Unlock all wheels.")
-                print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Processing... ", end="")
-                if cpm.all_wheels_unlocked():
-                    show_progress(f" Unlocking...", duration=2)
-                    print(f"{Fore.GREEN}  ---[{Style.RESET_ALL} Successfuly!")
+                if not is_unlimited and coins < required_coins:
+                    print(f"{Fore.RED}  ---[{Style.RESET_ALL} Balance tidak mencukupi. Diperlukan {required_coins} koin.")
                 else:
-                    print(f"{Fore.RED}  ---[{Style.RESET_ALL} Failed.")
+                    print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Processing... ", end="")
+                    if cpm.all_wheels_unlocked():
+                        show_progress(f" Unlocking...", duration=2)
+                        print(f"{Fore.GREEN}  ---[{Style.RESET_ALL} Successfuly!")
+                    else:
+                        print(f"{Fore.RED}  ---[{Style.RESET_ALL} Failed.")
                 print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
                 sleep(2)
-
+            
             elif choice == "12":
+                key_data = cpm.get_key_data()
+                is_unlimited = key_data.get("is_unlimited", False)
+                coins = key_data.get("coins", 0)
+                required_coins = 15000
                 print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
-                print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Unlock all brakes.")
-                print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Processing... ", end="")
-                if cpm.all_brakes_unlocked():
-                    show_progress(f" Unlocking...", duration=2)
-                    print(f"{Fore.GREEN}  ---[{Style.RESET_ALL} Successfuly!")
+                print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Unlock brakes.")
+                if not is_unlimited and coins < required_coins:
+                    print(f"{Fore.RED}  ---[{Style.RESET_ALL} Balance tidak mencukupi. Diperlukan {required_coins} koin.")
                 else:
-                    print(f"{Fore.RED}  ---[{Style.RESET_ALL} Failed.")
+                    print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Processing... ", end="")
+                    if cpm.all_brakes_unlocked():
+                        show_progress(f" Unlocking...", duration=2)
+                        print(f"{Fore.GREEN}  ---[{Style.RESET_ALL} Successfuly!")
+                    else:
+                        print(f"{Fore.RED}  ---[{Style.RESET_ALL} Failed.")
                 print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
                 sleep(2)
-
+            
             elif choice == "13":
+                key_data = cpm.get_key_data()
+                is_unlimited = key_data.get("is_unlimited", False)
+                coins = key_data.get("coins", 0)
+                required_coins = 15000
                 print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
-                print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Unlock all calipers.")
-                print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Processing... ", end="")
-                if cpm.all_calipers_unlocked():
-                    show_progress(f" Unlocking...", duration=2)
-                    print(f"{Fore.GREEN}  ---[{Style.RESET_ALL} Successfuly!")
+                print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Unlock calipers.")
+                if not is_unlimited and coins < required_coins:
+                    print(f"{Fore.RED}  ---[{Style.RESET_ALL} Balance tidak mencukupi. Diperlukan {required_coins} koin.")
                 else:
-                    print(f"{Fore.RED}  ---[{Style.RESET_ALL} Failed.")
+                    print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Processing... ", end="")
+                    if cpm.all_calipers_unlocked():
+                        show_progress(f" Unlocking...", duration=2)
+                        print(f"{Fore.GREEN}  ---[{Style.RESET_ALL} Successfuly!")
+                    else:
+                        print(f"{Fore.RED}  ---[{Style.RESET_ALL} Failed.")
                 print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
                 sleep(2)
-
+            
             elif choice == "14":
+                key_data = cpm.get_key_data()
+                is_unlimited = key_data.get("is_unlimited", False)
+                coins = key_data.get("coins", 0)
+                required_coins = 7500
                 print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
-                print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Unlock all sound police.")
-                print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Processing... ", end="")
-                if cpm.all_sound_police_unlocked():
-                    show_progress(f" Unlocking...", duration=2)
-                    print(f"{Fore.GREEN}  ---[{Style.RESET_ALL} Successfuly!")
+                print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Unlock sound police.")
+                if not is_unlimited and coins < required_coins:
+                    print(f"{Fore.RED}  ---[{Style.RESET_ALL} Balance tidak mencukupi. Diperlukan {required_coins} koin.")
                 else:
-                    print(f"{Fore.RED}  ---[{Style.RESET_ALL} Failed.")
+                    print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Processing... ", end="")
+                    if cpm.all_sound_police_unlocked():
+                        show_progress(f" Unlocking...", duration=2)
+                        print(f"{Fore.GREEN}  ---[{Style.RESET_ALL} Successfuly!")
+                    else:
+                        print(f"{Fore.RED}  ---[{Style.RESET_ALL} Failed.")
                 print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
                 sleep(2)
 
             elif choice == "15":
+                key_data = cpm.get_key_data()
+                is_unlimited = key_data.get("is_unlimited", False)
+                coins = key_data.get("coins", 0)
+                required_coins = 10000
                 print(Colorate.Horizontal(Colors.green_to_white, "=" * 21 + "[ Unlock Police ]" + "=" * 21))
-                print("  Cars List:")
-                print(namacar)
-                print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
-                input_ids = input(f"{Fore.CYAN} ---[{Style.RESET_ALL} Input number car: ").strip()
-                if not input_ids:
-                    print(f"{Fore.RED} ---[ Input tidak boleh kosong.")
+                if not is_unlimited and coins < required_coins:
+                    print(f"{Fore.RED}  ---[{Style.RESET_ALL} Balance tidak mencukupi. Diperlukan {required_coins} koin.")
                     print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
                     sleep(2)
                 else:
-                    nomor_list = [n.strip() for n in input_ids.split(",") if n.strip().isdigit()]
-                    for i, nomor in enumerate(nomor_list, 1):
-                        urutan = int(nomor)
-                        car_entry = next((item for item in nomercar if item["urutan"] == urutan), None)
-                        if not car_entry:
-                            print(f"{Fore.RED} ---[ Please enter the correct car number.")
-                            continue
-                        carid = str(car_entry["id"])
-                        carname = car_entry.get("name", f"Car ID {carid}")
-                        filepath = f"dataplayer/cars/{carid}"
-                        if not os.path.isfile(filepath):
-                            print(f"{Fore.RED} ---[ You don't have a car with CarID {carid}")
-                            continue
-                        with open(filepath, "r") as f:
-                            data = json.load(f)
-                        car_id = data["data"].get("CarID", "???")
-                        print(f"{Fore.CYAN} ---[{Style.RESET_ALL} Injecting CarID: {car_id} ({i}/{len(nomor_list)})...", end=" ")
-                        result = cpm.unlocked_police(data["data"])
-                        if result:
-                            print(f"{Fore.GREEN} Successfuly!")
-                        else:
-                            print(f"{Fore.RED} Failed.")
+                    print("  Cars List:")
+                    print(namacar)
                     print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
-                    sleep(2)
+                    input_ids = input(f"{Fore.CYAN} ---[{Style.RESET_ALL} Input number car: ").strip()
+                    if not input_ids:
+                        print(f"{Fore.RED} ---[ Input tidak boleh kosong.")
+                        print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
+                        sleep(2)
+                    else:
+                        nomor_list = [n.strip() for n in input_ids.split(",") if n.strip().isdigit()]
+                        for i, nomor in enumerate(nomor_list, 1):
+                            urutan = int(nomor)
+                            car_entry = next((item for item in nomercar if item["urutan"] == urutan), None)
+                            if not car_entry:
+                                print(f"{Fore.RED} ---[ Please enter the correct car number.")
+                                continue
+                            carid = str(car_entry["id"])
+                            carname = car_entry.get("name", f"Car ID {carid}")
+                            filepath = f"dataplayer/cars/{carid}"
+                            if not os.path.isfile(filepath):
+                                print(f"{Fore.RED} ---[ You don't have a car with CarID {carid}")
+                                continue
+                            with open(filepath, "r") as f:
+                                data = json.load(f)
+                            car_id = data["data"].get("CarID", "???")
+                            print(f"{Fore.CYAN} ---[{Style.RESET_ALL} Injecting CarID: {car_id} ({i}/{len(nomor_list)})...", end=" ")
+                            result = cpm.unlocked_police(data["data"])
+                            if result:
+                                print(f"{Fore.GREEN} Successfuly!")
+                            else:
+                                print(f"{Fore.RED} Failed.")
+                        print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
+                        sleep(2)
 
             elif choice == "16":
+                key_data = cpm.get_key_data()
+                is_unlimited = key_data.get("is_unlimited", False)
+                coins = key_data.get("coins", 0)
+                required_coins = 10000
                 print(Colorate.Horizontal(Colors.green_to_white, "=" * 21 + "[ Unlock Bodykits ]" + "=" * 21))
-                print("  Cars List:")
-                print(namacar)
-                print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
-                input_ids = input(f"{Fore.CYAN} ---[{Style.RESET_ALL} Input number car: ").strip()
-                if not input_ids:
-                    print(f"{Fore.RED} ---[ Input tidak boleh kosong.")
+                if not is_unlimited and coins < required_coins:
+                    print(f"{Fore.RED}  ---[{Style.RESET_ALL} Balance tidak mencukupi. Diperlukan {required_coins} koin.")
                     print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
                     sleep(2)
                 else:
-                    nomor_list = [n.strip() for n in input_ids.split(",") if n.strip().isdigit()]
-                    for i, nomor in enumerate(nomor_list, 1):
-                        urutan = int(nomor)
-                        car_entry = next((item for item in nomercar if item["urutan"] == urutan), None)
-                        if not car_entry:
-                            print(f"{Fore.RED} ---[ Please enter the correct car number.")
-                            continue
-                        carid = str(car_entry["id"])
-                        carname = car_entry.get("name", f"Car ID {carid}")
-                        filepath = f"dataplayer/cars/{carid}"
-                        if not os.path.isfile(filepath):
-                            print(f"{Fore.RED} ---[ You don't have a car with CarID {carid}")
-                            continue
-                        with open(filepath, "r") as f:
-                            data = json.load(f)
-                        car_id = data["data"].get("CarID", "???")
-                        print(f"{Fore.CYAN} ---[{Style.RESET_ALL} Injecting CarID: {car_id} ({i}/{len(nomor_list)})...", end=" ")
-                        result = cpm.unlocked_bodykits(data["data"])
-                        if result:
-                            print(f"{Fore.GREEN} Successfuly!")
-                        else:
-                            print(f"{Fore.RED} Failed.")
+                    print("  Cars List:")
+                    print(namacar)
                     print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
-                    sleep(2)
+                    input_ids = input(f"{Fore.CYAN} ---[{Style.RESET_ALL} Input number car: ").strip()
+                    if not input_ids:
+                        print(f"{Fore.RED} ---[ Input tidak boleh kosong.")
+                        print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
+                        sleep(2)
+                    else:
+                        nomor_list = [n.strip() for n in input_ids.split(",") if n.strip().isdigit()]
+                        for i, nomor in enumerate(nomor_list, 1):
+                            urutan = int(nomor)
+                            car_entry = next((item for item in nomercar if item["urutan"] == urutan), None)
+                            if not car_entry:
+                                print(f"{Fore.RED} ---[ Please enter the correct car number.")
+                                continue
+                            carid = str(car_entry["id"])
+                            carname = car_entry.get("name", f"Car ID {carid}")
+                            filepath = f"dataplayer/cars/{carid}"
+                            if not os.path.isfile(filepath):
+                                print(f"{Fore.RED} ---[ You don't have a car with CarID {carid}")
+                                continue
+                            with open(filepath, "r") as f:
+                                data = json.load(f)
+                            car_id = data["data"].get("CarID", "???")
+                            print(f"{Fore.CYAN} ---[{Style.RESET_ALL} Injecting CarID: {car_id} ({i}/{len(nomor_list)})...", end=" ")
+                            result = cpm.unlocked_bodykits(data["data"])
+                            if result:
+                                print(f"{Fore.GREEN} Successfuly!")
+                            else:
+                                print(f"{Fore.RED} Failed.")
+                        print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
+                        sleep(2)
 
             elif choice == "17":
+                key_data = cpm.get_key_data()
+                is_unlimited = key_data.get("is_unlimited", False)
+                coins = key_data.get("coins", 0)
+                required_coins = 3000
                 print(Colorate.Horizontal(Colors.green_to_white, "=" * 21 + "[ Unlock Cars ]" + "=" * 22))
-                print("  Cars List:")
-                print(namacar)
-                print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
-                input_ids = input(f"{Fore.CYAN} ---[{Style.RESET_ALL} Input number car: ").strip()
-                if not input_ids:
-                    print(f"{Fore.RED} ---[ Input tidak boleh kosong.")
+                if not is_unlimited and coins < required_coins:
+                    print(f"{Fore.RED}  ---[{Style.RESET_ALL} Balance tidak mencukupi. Diperlukan {required_coins} koin.")
                     print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
                     sleep(2)
                 else:
-                    nomor_list = [n.strip() for n in input_ids.split(",") if n.strip().isdigit()]
-                    for i, nomor in enumerate(nomor_list, 1):
-                        urutan = int(nomor)
-                        car_entry = next((item for item in nomercar if item["urutan"] == urutan), None)
-                        if not car_entry:
-                            print(f"{Fore.RED} ---[ Please enter the correct car number.")
-                            continue
-                        carid = str(car_entry["id"])
-                        carname = car_entry.get("name", f"Car ID {carid}")
-                        filepath = f"dataplayer/cars/{carid}"
-                        if not os.path.isfile(filepath):
-                            print(f"{Fore.RED} ---[ You don't have a car with CarID {carid}")
-                            continue
-                        with open(filepath, "r") as f:
-                            data = json.load(f)
-                        car_id = data["data"].get("CarID", "???")
-                        print(f"{Fore.CYAN} ---[{Style.RESET_ALL} Injecting CarID: {car_id} ({i}/{len(nomor_list)})...", end=" ")
-                        result = cpm.save_player_car(data["data"])
-                        if result:
-                            print(f"{Fore.GREEN} Successfuly!")
-                        else:
-                            print(f"{Fore.RED} Failed.")
+                    print("  Cars List:")
+                    print(namacar)
                     print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
-                    sleep(2)
+                    input_ids = input(f"{Fore.CYAN} ---[{Style.RESET_ALL} Input number car: ").strip()
+                    if not input_ids:
+                        print(f"{Fore.RED} ---[ Input tidak boleh kosong.")
+                        print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
+                        sleep(2)
+                    else:
+                        nomor_list = [n.strip() for n in input_ids.split(",") if n.strip().isdigit()]
+                        for i, nomor in enumerate(nomor_list, 1):
+                            urutan = int(nomor)
+                            car_entry = next((item for item in nomercar if item["urutan"] == urutan), None)
+                            if not car_entry:
+                                print(f"{Fore.RED} ---[ Please enter the correct car number.")
+                                continue
+                            carid = str(car_entry["id"])
+                            carname = car_entry.get("name", f"Car ID {carid}")
+                            filepath = f"dataplayer/cars/{carid}"
+                            if not os.path.isfile(filepath):
+                                print(f"{Fore.RED} ---[ You don't have a car with CarID {carid}")
+                                continue
+                            with open(filepath, "r") as f:
+                                data = json.load(f)
+                            car_id = data["data"].get("CarID", "???")
+                            print(f"{Fore.CYAN} ---[{Style.RESET_ALL} Injecting CarID: {car_id} ({i}/{len(nomor_list)})...", end=" ")
+                            result = cpm.save_player_car(data["data"])
+                            if result:
+                                print(f"{Fore.GREEN} Successfuly!")
+                            else:
+                                print(f"{Fore.RED} Failed.")
+                        print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
+                        sleep(2)
                     
             elif choice == "18":
+                key_data = cpm.get_key_data()
+                is_unlimited = key_data.get("is_unlimited", False)
+                coins = key_data.get("coins", 0)
+                required_coins = 10000
                 print(Colorate.Horizontal(Colors.green_to_white, "=" * 18 + "[ Swap Gearbox To AWD ]" + "=" * 17))
-                print("  Cars List:")
-                print(namacar)
-                print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
-                input_ids = input(f"{Fore.CYAN} ---[{Style.RESET_ALL} Input number car: ").strip()
-                if not input_ids:
-                    print(f"{Fore.RED} ---[ Input tidak boleh kosong.")
+                if not is_unlimited and coins < required_coins:
+                    print(f"{Fore.RED}  ---[{Style.RESET_ALL} Balance tidak mencukupi. Diperlukan {required_coins} koin.")
                     print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
                     sleep(2)
                 else:
-                    nomor_list = [n.strip() for n in input_ids.split(",") if n.strip().isdigit()]
-                    for i, nomor in enumerate(nomor_list, 1):
-                        urutan = int(nomor)
-                        car_entry = next((item for item in nomercar if item["urutan"] == urutan), None)
-                        if not car_entry:
-                            print(f"{Fore.RED} ---[ Please enter the correct car number.")
-                            continue
-                        carid = str(car_entry["id"])
-                        carname = car_entry.get("name", f"Car ID {carid}")
-                        filepath = f"dataplayer/cars/{carid}"
-                        if not os.path.isfile(filepath):
-                            print(f"{Fore.RED} ---[ You don't have a car with CarID {carid}")
-                            continue
-                        with open(filepath, "r") as f:
-                            data = json.load(f)
-                        car_id = data["data"].get("CarID", "???")
-                        print(f"{Fore.CYAN} ---[{Style.RESET_ALL} Injecting CarID: {car_id} ({i}/{len(nomor_list)})...", end=" ")
-                        result = cpm.swap_gearbox_awd(data["data"])
-                        if result:
-                            print(f"{Fore.GREEN} Successfuly!")
-                        else:
-                            print(f"{Fore.RED} Failed.")
+                    print("  Cars List:")
+                    print(namacar)
                     print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
-                    sleep(2)
+                    input_ids = input(f"{Fore.CYAN} ---[{Style.RESET_ALL} Input number car: ").strip()
+                    if not input_ids:
+                        print(f"{Fore.RED} ---[ Input tidak boleh kosong.")
+                        print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
+                        sleep(2)
+                    else:
+                        nomor_list = [n.strip() for n in input_ids.split(",") if n.strip().isdigit()]
+                        for i, nomor in enumerate(nomor_list, 1):
+                            urutan = int(nomor)
+                            car_entry = next((item for item in nomercar if item["urutan"] == urutan), None)
+                            if not car_entry:
+                                print(f"{Fore.RED} ---[ Please enter the correct car number.")
+                                continue
+                            carid = str(car_entry["id"])
+                            carname = car_entry.get("name", f"Car ID {carid}")
+                            filepath = f"dataplayer/cars/{carid}"
+                            if not os.path.isfile(filepath):
+                                print(f"{Fore.RED} ---[ You don't have a car with CarID {carid}")
+                                continue
+                            with open(filepath, "r") as f:
+                                data = json.load(f)
+                            car_id = data["data"].get("CarID", "???")
+                            print(f"{Fore.CYAN} ---[{Style.RESET_ALL} Injecting CarID: {car_id} ({i}/{len(nomor_list)})...", end=" ")
+                            result = cpm.swap_gearbox_awd(data["data"])
+                            if result:
+                                print(f"{Fore.GREEN} Successfuly!")
+                            else:
+                                print(f"{Fore.RED} Failed.")
+                        print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
+                        sleep(2)
