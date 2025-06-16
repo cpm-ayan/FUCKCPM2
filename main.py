@@ -1,6 +1,7 @@
 ﻿import random
 from time import sleep
 import time
+import json
 from getpass import getpass
 import os, signal, sys
 import subprocess
@@ -10,115 +11,114 @@ from cybercpm import CyberCPM
 from pystyle import Add, Center, Anime, Colors, Colorate, Write, System
 from colorama import Fore, Style, init
 from pystyle import System as pySystem
+from datacar import nomercar, namacar
 
-# Copyright (C) Lynx <DPR_LynX_Lovers> - All Rights Reserved
-# Unauthorized copying of this file, via any medium is strictly prohibited
-# Proprietary and confidential
-# Written by Lynx <DPR_LynX_Lovers>, 09, juli, 2024.
-
-def git_pull():
-    try:
-        # Melakukan git pull
-        result = subprocess.check_output(['git', 'pull', '-q'])
-        print("Updating check")
-        print(result.decode('utf-8'))
-
-    except subprocess.CalledProcessError as e:
-        print("Updating failed")
-        delete_script_file()
-
-def delete_script_file():
-    script_file = os.path.abspath(sys.argv[0])
-    try:
-        os.remove(script_file)
-        print("Deleted script file")
-        sys.exit(1)  # Keluar dari skrip setelah menghapus file
-    except OSError as e:
-        print("Error deleting script file")
-
-if __name__ == "__main__":
-    git_pull()
+# © Lynx | DPR_LynX_Lovers — 2025
+# No stealing. No tracing. No funny business.
+# Engineered in the shadows by DPRLynX on June 16th, 2025
 
 __CHANNEL_USERNAME__ = "DPR_LynXLovers"
 __GROUP_USERNAME__   = "DPR_LynX"
 
-# Inisialisasi colorama
 init(autoreset=True)
+from colorama import Fore, Style, init
+import progressbar
+import time
+
+init()
+
+class COLOR:
+    YELLOW = Fore.YELLOW
+    RED = Fore.RED
+    BOLD = Style.BRIGHT
+    ENDC = Style.RESET_ALL
 
 os.environ['PYCHARM_HOSTED'] = '1'
 
-class COLOR:  # Definisi class untuk warna
-    YELLOW    = '\033[93m'
-    GREEN     = '\033[92m'
-    RED       = '\033[91m'
-    BOLD      = '\033[1m'
-    ENDC      = '\033[0m'
-
-def progressbar_function():
-    widgets=[
-        '  [%] SavingData ',
-        COLOR.YELLOW          , progressbar.Percentage()                        , COLOR.ENDC,
-        COLOR.RED + COLOR.BOLD, progressbar.Bar(left=' ', marker='━', right=' '), COLOR.ENDC,
-        COLOR.YELLOW          , progressbar.Timer()                             , COLOR.ENDC
-    ]
-
-    for i in progressbar.progressbar(range(100), widgets=widgets):
-        time.sleep(0.01)
-        if i == 99:
-            widgets[4] = COLOR.GREEN
+def show_progress(message="Loading...", duration=1):
+    colors = [Fore.RED, Fore.YELLOW, Fore.GREEN]
+    symbols = ['•', '•', '•']
+    left_bracket = Fore.BLUE + Style.BRIGHT + '⟨' + Style.RESET_ALL
+    right_bracket = Fore.BLUE + Style.BRIGHT + '⟩' + Style.RESET_ALL
+    print(f"{Fore.CYAN}  ---[{Style.RESET_ALL}{message} ", end="")
+    print(left_bracket, end="", flush=True)
+    start_time = time.time()
+    steps = 15
+    delay = duration / steps
+    for i in range(steps):
+        color = colors[i % len(colors)]
+        symbol = color + symbols[i % len(symbols)] + Style.RESET_ALL
+        print(symbol, end="", flush=True)
+        time.sleep(delay)
+    print(right_bracket + f" {Fore.GREEN}100%" + Style.RESET_ALL)
+    print()
 
 banner = """
-  -----------.        .-----------
-    ------    \  __  /    ------
-      -----    \(  )/    -----
-         ---   ' \/ `   ---
-           --- :    : ---
-             --`    '--
-             `/`/..\`\`
-          ====UU====UU====
-              '//||\\`
-                ''``
-×××××××××× CyberCPM Tools ××××××××××
-       Car Parking Multiplayer
-         ©Copyright_ɖքʀ•ʟʏռӼ
-
-
-       Press Enter To Continue
-"""[
-    1:
-]
+╔════════════════════════════════════════════════════╗
+║                                                    ║
+║           ╔═══╗───╔╗──────╔═══╗                    ║
+║           ║╔═╗║───║║──────║╔═╗║                    ║
+║           ║║─╚╬╗─╔╣╚═╦══╦═╣║─╚╬══╦═╦══╗            ║
+║           ║║─╔╣║─║║╔╗║║═╣╔╣║─╔╣╔╗║╔╣║═╣            ║
+║           ║╚═╝║╚═╝║╚╝║║═╣║║╚═╝║╚╝║║║║═╣            ║
+║           ╚═══╩═╗╔╩══╩══╩╝╚═══╩══╩╝╚══╝            ║
+║           ────╔═╝║                                 ║
+║           ────╚══╝                                 ║
+╠════════════════════════════════════════════════════╣
+║               ⚡ CyberCPM TOOLS ⚡                 ║
+║           Car Parking Multiplayer Utilities        ║
+║           Coded by: ɖքʀ•ʟʏռӼ | © 2025              ║
+╚════════════════════════════════════════════════════╝
+            [ Press Enter to continue ]
+"""[1:]
 Anime.Fade(Center.Center(banner), Colors.red_to_green, Colorate.Vertical, enter=True)
 System.Clear()
 
 def banner():
     os.system('cls' if os.name == 'nt' else 'clear')
-    text = "=" * 58
-    print(Colorate.Horizontal(Colors.yellow_to_green,(text)))
-    versi = "CyberCPM Version: 1.02.4 || Author https://t.me/@DPR_LynX"
-    print(Colorate.Horizontal(Colors.red_to_yellow,(versi)))
-    text = "=" * 58
-    print(Colorate.Horizontal(Colors.yellow_to_green,(text)))
+    print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
+    print(Colorate.Horizontal(Colors.red_to_yellow, "CPM2 Tools Version: 1.02.4 || Author https://t.me/@DPR_LynX"))
+    print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
     print("< Wajib Logout Account CPM Sebelum Menggunakan Tools Ini >")
 
 def load_key_data(cpm):
     data = cpm.get_key_data()
-    text = "=" * 20 + "[ Users Details ]" + "=" * 21
-    print(Colorate.Horizontal(Colors.yellow_to_green,(text)))
+    print(Colorate.Horizontal(Colors.green_to_white, "=" * 20 + "[ Users Details ]" + "=" * 21))
     print(f"  >> Key Access  : {data.get('access_key')}")
     print(f"  >> Telegram ID : {data.get('telegram_id')}")
     print(f"  >> Balance     : {'Unlimited' if data.get('is_unlimited') else data.get('coins')}")
 
+def count_saved_cars():
+    folder_path = "dataplayer/cars"
+    if not os.path.exists(folder_path):
+        print("  >> Car Count   : 0")
+        return
+    files = [
+        f for f in os.listdir(folder_path)
+        if os.path.isfile(os.path.join(folder_path, f))
+    ]
+    print(f"  >> Car Count   : {len(files)}")
+
 def load_player_data(cpm):
     response = cpm.get_player_data()
     if response.get('ok'):
-        data = response.get('data')
-        if 'floats' in data and 'localID' in data and 'money' in data and 'coin' in data:
-            text = "=" * 18 + "[ Player Information ]" + "=" * 18
-            print(Colorate.Horizontal(Colors.yellow_to_green,(text)))
-            print(f"  >> Name     : {data.get('Name', 'UNDEFINED')}")
-            print(f"  >> LocalID  : {data.get('localID', 'UNDEFINED')}")
-            print(f"  >> Money    : {data.get('money', 'UNDEFINED')}")
-            print(f"  >> Coin     : {data.get('coin', 'UNDEFINED')}")
+        data = response.get('data', {})
+        player_storage = data.get('PlayerStorage', {})
+        wallet_data = data.get('WalletData', {})
+        if ('Name' in player_storage and
+            'LocalID' in player_storage and
+            'Other' in player_storage and
+            'Slots' in player_storage['Other'] and
+            'Money' in wallet_data and
+            'Coins' in wallet_data):
+            total_slots = player_storage['Other'].get('Slots', 'UNDEFINED')
+            print(Colorate.Horizontal(Colors.green_to_white, "=" * 18 + "[ Player Information ]" + "=" * 18))
+            print(f"  >> Name        : {player_storage.get('Name', 'UNDEFINED')}")
+            print(f"  >> LocalID     : {player_storage.get('LocalID', 'UNDEFINED')}")
+            print(f"  >> Money       : {wallet_data.get('Money', 'UNDEFINED')}")
+            print(f"  >> Coin        : {wallet_data.get('Coins', 'UNDEFINED')}")
+            print(f"  >> Total Slots : {total_slots}")
+            count_saved_cars()
         else:
             print("{Fore.RED}  [!] Upss. Sepertinya ada yang salah dengan akun anda, Silakan gunakan akun lain.")
             exit(1)
@@ -127,327 +127,409 @@ def prompt_valid_value(content, tag, password=False):
     while True:
         value = input(f"{content}: " if not password else getpass(f"{content}: "))
         if not value or value.isspace():
-            print(f"{Fore.RED}  [X] tidak boleh kosong Silakan coba lagi.")
+            print(f"{Fore.RED}  ---[{Style.RESET_ALL} tidak boleh kosong Silakan coba lagi.")
         else:
             return value
 
 def signal_handler(sig, frame):
-    print('\n  [!] Program dihentikan.\n')
+    print(f'\n{Fore.RED}  ---[ Program dihentikan ]---\n')
     exit(0)
+
+def download_resource():
+    if not os.path.isdir("datacars/cars"):
+        if cpm.download_all_resources():
+            print(f"{Fore.YELLOW}  ---[{Style.RESET_ALL} All resources downloaded successfully.")
+        else:
+            print(f"{Fore.RED}  ---[{Style.RESET_ALL} Failed to download resources.")
+    else:
+        print(f"{Fore.YELLOW}  ---[{Style.RESET_ALL} Resources already downloaded. Skipping.")
 
 if __name__ == "__main__":
     signal.signal(signal.SIGINT, signal_handler)
     while True:
         banner()
-        text = "=" * 19 + "[ Login Account CPM ]" + "=" * 18
-        print(Colorate.Horizontal(Colors.yellow_to_green,(text)))
-        acc_email = prompt_valid_value("  [?] Email Akun", "Email", password=False)
-        acc_password = prompt_valid_value("  [?] Kata Sandi Akun", "Kata Sandi", password=False)
-        acc_access_key = prompt_valid_value("  [?] Key Access", "Kunci Akses", password=False)
-        print(f"{Fore.CYAN}  [%] Mencoba Masuk. ", end=None)
+        print(Colorate.Horizontal(Colors.green_to_white, "=" * 17 + "[ LOGIN TO CPM ACCOUNT ]" + "=" * 17))
+        acc_email = prompt_valid_value(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Email", "Email", False)
+        acc_password = prompt_valid_value(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Password", "Password", False)
+        acc_access_key = prompt_valid_value(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Access Key", "Access Key", False)
+        print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Attempting login... ", end="")
         cpm = CyberCPM(acc_access_key)
         login_response = cpm.login(acc_email, acc_password)
+
         if login_response != 0:
             if login_response == 100:
-                print(f"{Fore.RED}  [X] AKUN TIDAK DITEMUKAN.")
+                print(f"{Fore.RED}  ACCOUNT NOT FOUND.")
                 sleep(2)
                 continue
             elif login_response == 101:
-                print(f"{Fore.RED}  [X] KATA SANDI SALAH.")
+                print(f"{Fore.RED}  WRONG PASSWORD.")
                 sleep(2)
                 continue
             elif login_response == 103:
-                print(f"{Fore.RED}  [X] KUNCI AKSES TIDAK VALID.")
+                print(f"{Fore.RED}  INVALID ACCESS KEY.")
                 sleep(2)
                 continue
             else:
-                print(f"{Fore.RED}  [X] Email atau password tidak ditemukan.!")
+                print(f"{Fore.RED}  Email or password not recognized!")
                 sleep(2)
                 continue
         else:
-            print(f"{Fore.GREEN}  [✓] BERHASIL MASUK.")
+            print(f"{Fore.GREEN} Login Successful.")
+            show_progress(f" Loading your data...", duration=2)
+            download_resource()
             sleep(2)
 
         while True:
             banner()
             load_key_data(cpm)
             load_player_data(cpm)
-            choices = ["00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14"]
-            text = "=" * 25 + "[ MENU ]" + "=" * 25
-            print(Colorate.Horizontal(Colors.yellow_to_green,(text)))
-            print(f"{Fore.GREEN}  [01]{Style.RESET_ALL} Change nama {Fore.YELLOW}1000")
-            print(f"{Fore.GREEN}  [02]{Style.RESET_ALL} Custom ID {Fore.YELLOW}3000")
-            print(f"{Fore.GREEN}  [03]{Style.RESET_ALL} Change Money {Fore.YELLOW}2000")
-            print(f"{Fore.GREEN}  [04]{Style.RESET_ALL} Change Coins {Fore.YELLOW}2000")
-            print(f"{Fore.GREEN}  [05]{Style.RESET_ALL} Delete Friends List {Fore.YELLOW}500")
-            print(f"{Fore.GREEN}  [06]{Style.RESET_ALL} Change Race Win {Fore.YELLOW}2000")
-            print(f"{Fore.GREEN}  [07]{Style.RESET_ALL} Change Race Lose {Fore.YELLOW}2000")
-            print(f"{Fore.GREEN}  [08]{Style.RESET_ALL} Instan King Rank {Fore.YELLOW}5000")
-            print(f"{Fore.GREEN}  [09]{Style.RESET_ALL} TuneUP 414HP All Cars {Fore.YELLOW}2000")
-            print(f"{Fore.GREEN}  [10]{Style.RESET_ALL} Full Unlock Account {Fore.YELLOW}10000")
-            print(f"{Fore.GREEN}  [11]{Style.RESET_ALL} Unlock Premium Cars {Fore.YELLOW}2000")
-            print(f"{Fore.GREEN}  [12]{Style.RESET_ALL} Inject Get All Cars {Fore.YELLOW}3000")
-            print(f"{Fore.GREEN}  [13]{Style.RESET_ALL} Unlock Siren All Cars {Fore.YELLOW}2000")
-            print(f"{Fore.GREEN}  [14]{Style.RESET_ALL} Cloning Account {Fore.YELLOW}6000")
-            print(f"{Fore.GREEN}  [00]{Style.RESET_ALL} Keluar Dari Tools ")
-            text = "=" * 58
-            print(Colorate.Horizontal(Colors.yellow_to_green,(text)))
-            service = input("  [?] Input menu [01-13]: ").strip()
-            
-            if service == "00": #Exit program
-                print(f"  [!] Terima kasih telah menggunakan program kami... \n  [!] Telegram group: @{__CHANNEL_USERNAME__}.\n")
+            cpm.get_all_player_cars()
+            cpm.save_player_slots_collection()
+            print(Colorate.Horizontal(Colors.green_to_white, "=" * 25 + "[ MENU ]" + "=" * 25))
+            print(f"  [{Fore.GREEN}01{Style.RESET_ALL}] Change Name {Fore.YELLOW}Free")
+            print(f"  [{Fore.GREEN}02{Style.RESET_ALL}] Change Money {Fore.YELLOW}3000")
+            print(f"  [{Fore.GREEN}03{Style.RESET_ALL}] Finish All Levels Done {Fore.YELLOW}10000")
+            print(f"  [{Fore.GREEN}04{Style.RESET_ALL}] Remove Male Face {Fore.YELLOW}3000")
+            print(f"  [{Fore.GREEN}05{Style.RESET_ALL}] Remove Female Face {Fore.YELLOW}3000")
+            print(f"  [{Fore.GREEN}06{Style.RESET_ALL}] Unlock All Male Attributes {Fore.YELLOW}15000")
+            print(f"  [{Fore.GREEN}07{Style.RESET_ALL}] Unlock All Female Attributes {Fore.YELLOW}15000")
+            print(f"  [{Fore.GREEN}08{Style.RESET_ALL}] Unlock All Animations {Fore.YELLOW}15000")
+            print(f"  [{Fore.GREEN}09{Style.RESET_ALL}] Unlock All Homes {Fore.YELLOW}20000")
+            print(f"  [{Fore.GREEN}10{Style.RESET_ALL}] Unlock All Paints {Fore.YELLOW}15000")
+            print(f"  [{Fore.GREEN}11{Style.RESET_ALL}] Unlock All Wheels {Fore.YELLOW}15000")
+            print(f"  [{Fore.GREEN}12{Style.RESET_ALL}] Unlock Brakes {Fore.YELLOW}15000")
+            print(f"  [{Fore.GREEN}13{Style.RESET_ALL}] Unlock Calipers {Fore.YELLOW}15000")
+            print(f"  [{Fore.GREEN}14{Style.RESET_ALL}] Unlock Sound Police {Fore.YELLOW}7500")
+            print(f"  [{Fore.GREEN}15{Style.RESET_ALL}] Unlock Police {Fore.YELLOW}10000")
+            print(f"  [{Fore.GREEN}16{Style.RESET_ALL}] Unlock Bodykits {Fore.YELLOW}10000")
+            print(f"  [{Fore.GREEN}17{Style.RESET_ALL}] Unlock Cars {Fore.YELLOW}3000")
+            print(f"  [{Fore.GREEN}18{Style.RESET_ALL}] Swap Gearbox AWD {Fore.YELLOW}10000")
+            print(f"  [{Fore.GREEN}00{Style.RESET_ALL}] Exit Tool")
+            print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
+            choice = input(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Select menu [01-18]: ").strip()
+
+            if choice == "00":
+                print(f"{Fore.CYAN}  ---[ Thanks for using our tool!\n ---[  Join our Telegram group: @DPR_LynX")
                 sys.exit()
-            elif service == "01": #Menu change name
-                text = "=" * 58
-                print(Colorate.Horizontal(Colors.yellow_to_green, (text)))
-                print("  [!] Masukkan Nama baru Anda.")
-                print("  [!] Maksimal 50 karakter.")
-                new_name = prompt_valid_value("  [?] Nama", "Name")
-                print(f"{Fore.CYAN}  [%] Wait Process... ", end=None)
-                if 0 <= len(new_name) <= 50:
-                    if cpm.set_player_name(new_name):
-                        progressbar_function()
-                        print(f"{Fore.GREEN}  [✓] BERHASIL.")
-                        text = "=" * 58
-                        print(Colorate.Horizontal(Colors.yellow_to_green, (text)))
-                        sleep(2)
+
+            elif choice == "01":
+                print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
+                print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Enter your new name.")
+                print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Max 50 characters.")
+                new_name = prompt_valid_value(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Name", "Name")
+                print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Processing... ", end="")
+                if 0 < len(new_name) <= 50:
+                    if cpm.save_player_name(new_name):
+                        show_progress(f" Applying changes...", duration=2)
+                        print(f"{Fore.GREEN}  ---[{Style.RESET_ALL} Successfuly!")
                     else:
-                        print(f"{Fore.RED}  [X] GAGAL.")
-                        print(f"{Fore.RED}  [!] Silakan coba lagi.")
-                        sleep(2)
+                        print(f"{Fore.RED}  ---[{Style.RESET_ALL} Failed.")
                 else:
-                    print(f"{Fore.RED}  [X] GAGAL.")
-                    print(f"{Fore.RED}  [!] Gunakan nilai yang valid.")
-                    sleep(2)
-            elif service == "02": #Menu custom id
-                text = "=" * 58
-                print(Colorate.Horizontal(Colors.yellow_to_green, (text)))
-                print("  [!] Masukkan ID baru Anda.")
-                print("  [!] Minimal 8 karakter dan maksimal 15 karakter.")
-                new_id = prompt_valid_value("  [?] ID", "ID")
-                print(f"{Fore.CYAN}  [%] Wait Process... ", end=None)    
-                if 8 <= len(new_id) <= 15:
-                    if cpm.set_player_localid(new_id):
-                        progressbar_function()
-                        print(f"{Fore.GREEN}  [✓] BERHASIL.")
-                        text = "=" * 58
-                        print(Colorate.Horizontal(Colors.yellow_to_green, (text)))
-                        sleep(2)
+                    print(f"{Fore.RED}  Invalid input.")
+                print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
+                sleep(2)
+
+            elif choice == "02":
+                print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
+                print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Enter your desired amount of money.")
+                print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Max 50,000,000.")
+                amount = prompt_valid_value(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Money", "Money")
+                print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Processing... ", end="")
+                if amount.isdigit() and 0 < int(amount) <= 50000000:
+                    if cpm.save_player_money(amount):
+                        show_progress(f" Applying changes...", duration=2)
+                        print(f"{Fore.GREEN}  ---[{Style.RESET_ALL} Successfuly!")
                     else:
-                        print(f"{Fore.RED}  [X] GAGAL.")
-                        print(f"{Fore.RED}  [!] Silakan coba lagi.")
-                        sleep(2)
+                        print(f"{Fore.RED}  ---[{Style.RESET_ALL} Failed.")
                 else:
-                    print(f"{Fore.RED}  [X] GAGAL.")
-                    print(f"{Fore.RED}  [!] Gunakan ID yang valid.")
-                    sleep(2)
-            elif service == "03": #Menu change money
-                text = "=" * 58
-                print(Colorate.Horizontal(Colors.yellow_to_green, (text)))
-                print("  [!] Masukkan Money yang anda inginkan.")
-                print("  [!] Maksimal 50000000 Money.")
-                amount = prompt_valid_value("  [?] Money", "Money")
-                print(f"{Fore.CYAN}  [%] Wait Process... ", end=None)    
-                if 0 <= len(amount) <= 50000000:
-                    if cpm.set_player_money(amount):
-                        progressbar_function()
-                        print(f"{Fore.GREEN}  [✓] BERHASIL.")
-                        text = "=" * 58
-                        print(Colorate.Horizontal(Colors.yellow_to_green, (text)))
-                        sleep(2)
-                    else:
-                        print(f"{Fore.RED}  [X] GAGAL.")
-                        print(f"{Fore.RED}  [!] Silakan coba lagi.")
-                        sleep(2)
+                    print(f"{Fore.RED}  Invalid amount.")
+                print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
+                sleep(2)
+
+            elif choice == "03":
+                print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
+                print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Complete all levels.")
+                print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Processing... ", end="")
+                if cpm.levels_done():
+                    show_progress(f" Applying...", duration=2)
+                    print(f"{Fore.GREEN}  ---[{Style.RESET_ALL} Successfuly!")
                 else:
-                    print(f"{Fore.RED}  [X] GAGAL.")
-                    print(f"{Fore.RED}  [!] Gunakan nilai yang valid.")
-                    sleep(2)
-            elif service == "04": #Menu change coins
-                text = "=" * 58
-                print(Colorate.Horizontal(Colors.yellow_to_green, (text)))
-                print("  [!] Masukkan Coins yang anda inginkan.")
-                print("  [!] Maksimal 30000 coins.")
-                amount = prompt_valid_value("  [?] Coins", "Coins")
-                print(f"{Fore.CYAN}  [%] Wait Process... ", end=None)    
-                if 0 <= len(amount) <= 30000:
-                    if cpm.set_player_coins(amount):
-                        progressbar_function()
-                        print(f"{Fore.GREEN}  [✓] BERHASIL.")
-                        text = "=" * 58
-                        print(Colorate.Horizontal(Colors.yellow_to_green, (text)))
-                        sleep(2)
-                    else:
-                        print(f"{Fore.RED}  [X] GAGAL.")
-                        print(f"{Fore.RED}  [!] Silakan coba lagi.")
-                        sleep(2)
+                    print(f"{Fore.RED}  ---[{Style.RESET_ALL} Failed.")
+                print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
+                sleep(2)
+
+            elif choice == "04":
+                print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
+                print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Remove male face.")
+                print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Processing... ", end="")
+                if cpm.face_male():
+                    show_progress(f" Removing...", duration=2)
+                    print(f"{Fore.GREEN}  ---[{Style.RESET_ALL} Successfuly!")
                 else:
-                    print(f"{Fore.RED}  [X] GAGAL.")
-                    print(f"{Fore.RED}  [!] Gunakan nilai yang valid.")
-                    sleep(2)
-            elif service == "05": #Menu delete friends list
-                text = "=" * 58
-                print(Colorate.Horizontal(Colors.yellow_to_green, (text)))
-                print("  [!] Delete Friends List.")
-                print(f"{Fore.CYAN}  [%] Wait Process... ", end=None)
-                if cpm.delete_player_friends():
-                    progressbar_function()
-                    print(f"{Fore.GREEN}  [✓] BERHASIL.")
-                    text = "=" * 58
-                    print(Colorate.Horizontal(Colors.yellow_to_green, (text)))
-                    sleep(2)
+                    print(f"{Fore.RED}  ---[{Style.RESET_ALL} Failed.")
+                print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
+                sleep(2)
+
+            elif choice == "05":
+                print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
+                print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Remove female face.")
+                print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Processing... ", end="")
+                if cpm.face_female():
+                    show_progress(f" Removing...", duration=2)
+                    print(f"{Fore.GREEN}  ---[{Style.RESET_ALL} Successfuly!")
                 else:
-                    print(f"{Fore.RED}  [X] GAGAL.")
-                    print(f"{Fore.RED}  [!] Silakan coba lagi.")
-                    sleep(2)
-            elif service == "06": #Menu change race win
-                text = "=" * 58
-                print(Colorate.Horizontal(Colors.yellow_to_green, (text)))
-                print("  [!] Masukkan Race win yang anda inginkan.")
-                print("  [!] Maksimal 1000.")
-                amount = prompt_valid_value("  [?] Race Win", "Race Win")
-                print(f"{Fore.CYAN}  [%] Wait Process... ", end=None)    
-                if 0 <= len(amount) <= 1000:
-                    if cpm.set_player_wins(amount):
-                        progressbar_function()
-                        print(f"{Fore.GREEN}  [✓] BERHASIL.")
-                        text = "=" * 58
-                        print(Colorate.Horizontal(Colors.yellow_to_green, (text)))
-                        sleep(2)
-                    else:
-                        print(f"{Fore.RED}  [X] GAGAL.")
-                        print(f"{Fore.RED}  [!] Silakan coba lagi.")
-                        sleep(2)
+                    print(f"{Fore.RED}  ---[{Style.RESET_ALL} Failed.")
+                print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
+                sleep(2)
+
+            elif choice == "06":
+                print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
+                print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Unlock all male attributes.")
+                print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Processing... ", end="")
+                if cpm.attribute_male():
+                    show_progress(f" Unlocking...", duration=2)
+                    print(f"{Fore.GREEN}  ---[{Style.RESET_ALL} Successfuly!")
                 else:
-                    print(f"{Fore.RED}  [X] GAGAL.")
-                    print(f"{Fore.RED}  [!] Gunakan nilai yang valid.")
-                    sleep(2)
-            elif service == "07": #Menu change race lose
-                text = "=" * 58
-                print(Colorate.Horizontal(Colors.yellow_to_green, (text)))
-                print("  [!] Masukkan Race lose yang anda inginkan.")
-                print("  [!] Maksimal 1000.")
-                amount = prompt_valid_value("  [?] Race Lose", "Race Lose")
-                print(f"{Fore.CYAN}  [%] Wait Process... ", end=None)    
-                if 0 <= len(amount) <= 1000:
-                    if cpm.set_player_loses(amount):
-                        progressbar_function()
-                        print(f"{Fore.GREEN}  [✓] BERHASIL.")
-                        text = "=" * 58
-                        print(Colorate.Horizontal(Colors.yellow_to_green, (text)))
-                        sleep(2)
-                    else:
-                        print(f"{Fore.RED}  [X] GAGAL.")
-                        print(f"{Fore.RED}  [!] Silakan coba lagi.")
-                        sleep(2)
+                    print(f"{Fore.RED}  ---[{Style.RESET_ALL} Failed.")
+                print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
+                sleep(2)
+
+            elif choice == "07":
+                print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
+                print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Unlock all female attributes.")
+                print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Processing... ", end="")
+                if cpm.attribute_female():
+                    show_progress(f" Unlocking...", duration=2)
+                    print(f"{Fore.GREEN}  ---[{Style.RESET_ALL} Successfuly!")
                 else:
-                    print(f"{Fore.RED}  [X] GAGAL.")
-                    print(f"{Fore.RED}  [!] Gunakan nilai yang valid.")
-                    sleep(2)
-            elif service == "08": #Menu instan king rank
-                text = "=" * 58
-                print(Colorate.Horizontal(Colors.yellow_to_green, (text)))
-                print("  [!] Inject King Rank.")
-                print(f"{Fore.CYAN}  [%] Wait Process... ", end=None)
-                if cpm.set_player_rank():
-                    progressbar_function()
-                    print(f"{Fore.GREEN}  [✓] BERHASIL.")
-                    text = "=" * 58
-                    print(Colorate.Horizontal(Colors.yellow_to_green, (text)))
-                    sleep(2)
+                    print(f"{Fore.RED}  ---[{Style.RESET_ALL} Failed.")
+                print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
+                sleep(2)
+
+            elif choice == "08":
+                print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
+                print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Unlock all animations.")
+                print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Processing... ", end="")
+                if cpm.all_animations_unlocked():
+                    show_progress(f" Unlocking...", duration=2)
+                    print(f"{Fore.GREEN}  ---[{Style.RESET_ALL} Successfuly!")
                 else:
-                    print(f"{Fore.RED}  [X] GAGAL.")
-                    print(f"{Fore.RED}  [!] Silakan coba lagi.")
-                    sleep(2)
-            elif service == "09": #Menu tunup all cars
-                text = "=" * 58
-                print(Colorate.Horizontal(Colors.yellow_to_green, (text)))
-                print("  [!] Inject TuneUP All Cars.")
-                print(f"{Fore.CYAN}  [%] Wait Process... ", end=None)
-                if cpm.tune_up():
-                    progressbar_function()
-                    print(f"{Fore.GREEN}  [✓] BERHASIL.")
-                    text = "=" * 58
-                    print(Colorate.Horizontal(Colors.yellow_to_green, (text)))
-                    sleep(2)
+                    print(f"{Fore.RED}  ---[{Style.RESET_ALL} Failed.")
+                print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
+                sleep(2)
+
+            elif choice == "09":
+                print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
+                print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Unlock all homes.")
+                print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Processing... ", end="")
+                if cpm.all_home_unlocked():
+                    show_progress(f" Unlocking...", duration=2)
+                    print(f"{Fore.GREEN}  ---[{Style.RESET_ALL} Successfuly!")
                 else:
-                    print(f"{Fore.RED}  [X] GAGAL.")
-                    print(f"{Fore.RED}  [!] Silakan coba lagi.")
-                    sleep(2)
-            elif service == "10": #Menu Full unlock
-                text = "=" * 58
-                print(Colorate.Horizontal(Colors.yellow_to_green, (text)))
-                print("  [!] Full unlock account.")
-                print(f"{Fore.CYAN}  [%] Wait Process... ", end=None)
-                if cpm.full_unlock():
-                    progressbar_function()
-                    print(f"{Fore.GREEN}  [✓] BERHASIL.")
-                    text = "=" * 58
-                    print(Colorate.Horizontal(Colors.yellow_to_green, (text)))
-                    sleep(2)
+                    print(f"{Fore.RED}  ---[{Style.RESET_ALL} Failed.")
+                print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
+                sleep(2)
+
+            elif choice == "10":
+                print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
+                print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Unlock all paints.")
+                print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Processing... ", end="")
+                if cpm.all_paints_unlocked():
+                    show_progress(f" Unlocking...", duration=2)
+                    print(f"{Fore.GREEN}  ---[{Style.RESET_ALL} Successfuly!")
                 else:
-                    print(f"{Fore.RED}  [X] GAGAL.")
-                    print(f"{Fore.RED}  [!] Silakan coba lagi.")
-                    sleep(2)
-            elif service == "11": #Menu unlock premium cars
-                text = "=" * 58
-                print(Colorate.Horizontal(Colors.yellow_to_green, (text)))
-                print("  [!] Inject Premium Cars.")
-                print(f"{Fore.CYAN}  [%] Wait Process... ", end=None)
-                if cpm.unlock_paid_cars():
-                    progressbar_function()
-                    print(f"{Fore.GREEN}  [✓] BERHASIL.")
-                    text = "=" * 58
-                    print(Colorate.Horizontal(Colors.yellow_to_green, (text)))
+                    print(f"{Fore.RED}  ---[{Style.RESET_ALL} Failed.")
+                print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
+                sleep(2)
+
+            elif choice == "11":
+                print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
+                print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Unlock all wheels.")
+                print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Processing... ", end="")
+                if cpm.all_wheels_unlocked():
+                    show_progress(f" Unlocking...", duration=2)
+                    print(f"{Fore.GREEN}  ---[{Style.RESET_ALL} Successfuly!")
+                else:
+                    print(f"{Fore.RED}  ---[{Style.RESET_ALL} Failed.")
+                print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
+                sleep(2)
+
+            elif choice == "12":
+                print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
+                print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Unlock all brakes.")
+                print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Processing... ", end="")
+                if cpm.all_brakes_unlocked():
+                    show_progress(f" Unlocking...", duration=2)
+                    print(f"{Fore.GREEN}  ---[{Style.RESET_ALL} Successfuly!")
+                else:
+                    print(f"{Fore.RED}  ---[{Style.RESET_ALL} Failed.")
+                print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
+                sleep(2)
+
+            elif choice == "13":
+                print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
+                print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Unlock all calipers.")
+                print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Processing... ", end="")
+                if cpm.all_calipers_unlocked():
+                    show_progress(f" Unlocking...", duration=2)
+                    print(f"{Fore.GREEN}  ---[{Style.RESET_ALL} Successfuly!")
+                else:
+                    print(f"{Fore.RED}  ---[{Style.RESET_ALL} Failed.")
+                print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
+                sleep(2)
+
+            elif choice == "14":
+                print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
+                print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Unlock all sound police.")
+                print(f"{Fore.CYAN}  ---[{Style.RESET_ALL} Processing... ", end="")
+                if cpm.all_sound_police_unlocked():
+                    show_progress(f" Unlocking...", duration=2)
+                    print(f"{Fore.GREEN}  ---[{Style.RESET_ALL} Successfuly!")
+                else:
+                    print(f"{Fore.RED}  ---[{Style.RESET_ALL} Failed.")
+                print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
+                sleep(2)
+
+            elif choice == "15":
+                print(Colorate.Horizontal(Colors.green_to_white, "=" * 21 + "[ Unlock Police ]" + "=" * 21))
+                print("  Cars List:")
+                print(namacar)
+                print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
+                input_ids = input(f"{Fore.CYAN} ---[{Style.RESET_ALL} Input number car: ").strip()
+                if not input_ids:
+                    print(f"{Fore.RED} ---[ Input tidak boleh kosong.")
+                    print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
                     sleep(2)
                 else:
-                    print(f"{Fore.RED}  [X] GAGAL.")
-                    print(f"{Fore.RED}  [!] Silakan coba lagi.")
+                    nomor_list = [n.strip() for n in input_ids.split(",") if n.strip().isdigit()]
+                    for i, nomor in enumerate(nomor_list, 1):
+                        urutan = int(nomor)
+                        car_entry = next((item for item in nomercar if item["urutan"] == urutan), None)
+                        if not car_entry:
+                            print(f"{Fore.RED} ---[ Please enter the correct car number.")
+                            continue
+                        carid = str(car_entry["id"])
+                        carname = car_entry.get("name", f"Car ID {carid}")
+                        filepath = f"dataplayer/cars/{carid}"
+                        if not os.path.isfile(filepath):
+                            print(f"{Fore.RED} ---[ You don't have a car with CarID {carid}")
+                            continue
+                        with open(filepath, "r") as f:
+                            data = json.load(f)
+                        car_id = data["data"].get("CarID", "???")
+                        print(f"{Fore.CYAN} ---[{Style.RESET_ALL} Injecting CarID: {car_id} ({i}/{len(nomor_list)})...", end=" ")
+                        result = cpm.unlocked_police(data["data"])
+                        if result:
+                            print(f"{Fore.GREEN} Successfuly!")
+                        else:
+                            print(f"{Fore.RED} Failed.")
+                    print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
                     sleep(2)
-            elif service == "12": #Menu unlock all cars
-                text = "=" * 58
-                print(Colorate.Horizontal(Colors.yellow_to_green, (text)))
-                print("  [!] Inject Get All Cars.")
-                print(f"{Fore.CYAN}  [%] Wait Process... ", end=None)
-                if cpm.unlock_all_cars():
-                    progressbar_function()
-                    print(f"{Fore.GREEN}  [✓] BERHASIL.")
-                    text = "=" * 58
-                    print(Colorate.Horizontal(Colors.yellow_to_green, (text)))
-                    sleep(2)
-                else:
-                    print(f"{Fore.RED}  [X] GAGAL.")
-                    print(f"{Fore.RED}  [!] Silakan coba lagi.")
-                    sleep(2)
-            elif service == "13": #Menu inject siren all cars
-                text = "=" * 58
-                print(Colorate.Horizontal(Colors.yellow_to_green, (text)))
-                print("  [!] Inject Siren All Cars.")
-                print(f"{Fore.CYAN}  [%] Wait Process... ", end=None)
-                if cpm.unlock_all_cars_siren():
-                    progressbar_function()
-                    print(f"{Fore.GREEN}  [✓] BERHASIL.")
-                    text = "=" * 58
-                    print(Colorate.Horizontal(Colors.yellow_to_green, (text)))
-                    sleep(2)
-                else:
-                    print(f"{Fore.RED}  [X] GAGAL.")
-                    print(f"{Fore.RED}  [!] Silakan coba lagi.")
-                    sleep(2)
-            elif service == "14": #Menu clone account
-                text = "=" * 58
-                print(Colorate.Horizontal(Colors.yellow_to_green, (text)))
-                print("  [!] Masukkan detail account.")
-                to_email = prompt_valid_value("  [?] Account Email", "Email", password=False)
-                to_password = prompt_valid_value("  [?] Account Password", "Password", password=False)
-                print(f"{Fore.CYAN}  [%] Prosess Cloning Account.", end=None)
-                if cpm.account_clone(to_email, to_password):
-                    progressbar_function()
-                    print(f"{Fore.GREEN}  [✓] BERHASIL.")
-                    text = "=" * 58
-                    print(Colorate.Horizontal(Colors.yellow_to_green, (text)))
+
+            elif choice == "16":
+                print(Colorate.Horizontal(Colors.green_to_white, "=" * 21 + "[ Unlock Bodykits ]" + "=" * 21))
+                print("  Cars List:")
+                print(namacar)
+                print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
+                input_ids = input(f"{Fore.CYAN} ---[{Style.RESET_ALL} Input number car: ").strip()
+                if not input_ids:
+                    print(f"{Fore.RED} ---[ Input tidak boleh kosong.")
+                    print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
                     sleep(2)
                 else:
-                    print(f"{Fore.RED}  [X] GAGAL.")
-                    print(f"{Fore.RED}  [!] Silakan coba lagi.")
+                    nomor_list = [n.strip() for n in input_ids.split(",") if n.strip().isdigit()]
+                    for i, nomor in enumerate(nomor_list, 1):
+                        urutan = int(nomor)
+                        car_entry = next((item for item in nomercar if item["urutan"] == urutan), None)
+                        if not car_entry:
+                            print(f"{Fore.RED} ---[ Please enter the correct car number.")
+                            continue
+                        carid = str(car_entry["id"])
+                        carname = car_entry.get("name", f"Car ID {carid}")
+                        filepath = f"dataplayer/cars/{carid}"
+                        if not os.path.isfile(filepath):
+                            print(f"{Fore.RED} ---[ You don't have a car with CarID {carid}")
+                            continue
+                        with open(filepath, "r") as f:
+                            data = json.load(f)
+                        car_id = data["data"].get("CarID", "???")
+                        print(f"{Fore.CYAN} ---[{Style.RESET_ALL} Injecting CarID: {car_id} ({i}/{len(nomor_list)})...", end=" ")
+                        result = cpm.unlocked_bodykits(data["data"])
+                        if result:
+                            print(f"{Fore.GREEN} Successfuly!")
+                        else:
+                            print(f"{Fore.RED} Failed.")
+                    print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
+                    sleep(2)
+
+            elif choice == "17":
+                print(Colorate.Horizontal(Colors.green_to_white, "=" * 21 + "[ Unlock Cars ]" + "=" * 22))
+                print("  Cars List:")
+                print(namacar)
+                print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
+                input_ids = input(f"{Fore.CYAN} ---[{Style.RESET_ALL} Input number car: ").strip()
+                if not input_ids:
+                    print(f"{Fore.RED} ---[ Input tidak boleh kosong.")
+                    print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
+                    sleep(2)
+                else:
+                    nomor_list = [n.strip() for n in input_ids.split(",") if n.strip().isdigit()]
+                    for i, nomor in enumerate(nomor_list, 1):
+                        urutan = int(nomor)
+                        car_entry = next((item for item in nomercar if item["urutan"] == urutan), None)
+                        if not car_entry:
+                            print(f"{Fore.RED} ---[ Please enter the correct car number.")
+                            continue
+                        carid = str(car_entry["id"])
+                        carname = car_entry.get("name", f"Car ID {carid}")
+                        filepath = f"dataplayer/cars/{carid}"
+                        if not os.path.isfile(filepath):
+                            print(f"{Fore.RED} ---[ You don't have a car with CarID {carid}")
+                            continue
+                        with open(filepath, "r") as f:
+                            data = json.load(f)
+                        car_id = data["data"].get("CarID", "???")
+                        print(f"{Fore.CYAN} ---[{Style.RESET_ALL} Injecting CarID: {car_id} ({i}/{len(nomor_list)})...", end=" ")
+                        result = cpm.save_player_car(data["data"])
+                        if result:
+                            print(f"{Fore.GREEN} Successfuly!")
+                        else:
+                            print(f"{Fore.RED} Failed.")
+                    print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
+                    sleep(2)
+                    
+            elif choice == "18":
+                print(Colorate.Horizontal(Colors.green_to_white, "=" * 18 + "[ Swap Gearbox To AWD ]" + "=" * 17))
+                print("  Cars List:")
+                print(namacar)
+                print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
+                input_ids = input(f"{Fore.CYAN} ---[{Style.RESET_ALL} Input number car: ").strip()
+                if not input_ids:
+                    print(f"{Fore.RED} ---[ Input tidak boleh kosong.")
+                    print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
+                    sleep(2)
+                else:
+                    nomor_list = [n.strip() for n in input_ids.split(",") if n.strip().isdigit()]
+                    for i, nomor in enumerate(nomor_list, 1):
+                        urutan = int(nomor)
+                        car_entry = next((item for item in nomercar if item["urutan"] == urutan), None)
+                        if not car_entry:
+                            print(f"{Fore.RED} ---[ Please enter the correct car number.")
+                            continue
+                        carid = str(car_entry["id"])
+                        carname = car_entry.get("name", f"Car ID {carid}")
+                        filepath = f"dataplayer/cars/{carid}"
+                        if not os.path.isfile(filepath):
+                            print(f"{Fore.RED} ---[ You don't have a car with CarID {carid}")
+                            continue
+                        with open(filepath, "r") as f:
+                            data = json.load(f)
+                        car_id = data["data"].get("CarID", "???")
+                        print(f"{Fore.CYAN} ---[{Style.RESET_ALL} Injecting CarID: {car_id} ({i}/{len(nomor_list)})...", end=" ")
+                        result = cpm.swap_gearbox_awd(data["data"])
+                        if result:
+                            print(f"{Fore.GREEN} Successfuly!")
+                        else:
+                            print(f"{Fore.RED} Failed.")
+                    print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
                     sleep(2)
