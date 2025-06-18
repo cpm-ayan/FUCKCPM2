@@ -17,8 +17,8 @@ from datacar import nomercar, namacar
 # No stealing. No tracing. No funny business.
 # Engineered in the shadows by DPRLynX on June 16th, 2025
 
-__CHANNEL_USERNAME__ = "DPR_LynXLovers"
-__GROUP_USERNAME__   = "DPR_LynX"
+__CHANNEL_USERNAME__ = "CP_Ayan"
+__GROUP_USERNAME__   = "Cp_ayan_chat"
 
 init(autoreset=True)
 from colorama import Fore, Style, init
@@ -84,9 +84,9 @@ banner = """
 ║           ────╔═╝║                                 ║
 ║           ────╚══╝                                 ║
 ╠════════════════════════════════════════════════════╣
-║               ⚡ CyberCPM TOOLS ⚡                 ║
+║               ⚡ CPMAYAN TOOLS ⚡                 ║
 ║           Car Parking Multiplayer Utilities        ║
-║           Coded by: ɖքʀ•ʟʏռӼ | © 2025              ║
+║           Coded by: @ayanhere09 | © 2025              ║
 ╚════════════════════════════════════════════════════╝
             [ Press Enter to continue ]
 """[1:]
@@ -96,9 +96,9 @@ System.Clear()
 def banner():
     os.system('cls' if os.name == 'nt' else 'clear')
     print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
-    print(Colorate.Horizontal(Colors.red_to_yellow, "CPM2 Tools Version: 1.02.4 || Author https://t.me/@DPR_LynX"))
+    print(Colorate.Horizontal(Colors.red_to_yellow, "CPM2 Tools Version: 1.02.4 || Author https://t.me/@ayanhere09"))
     print(Colorate.Horizontal(Colors.green_to_white, "=" * 58))
-    print("< Wajib Logout Account CPM Sebelum Menggunakan Tools Ini >")
+    print("< Logout From CPM Before Using>")
 
 def load_key_data(cpm):
     data = cpm.get_key_data()
