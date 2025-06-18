@@ -1,5 +1,5 @@
 ﻿import random
-from time import sleep
+from time import sleeps
 import time
 import json
 from getpass import getpass
