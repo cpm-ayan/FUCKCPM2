@@ -1,5 +1,4 @@
 import base64
-from Crypto.Cipher import AES
 from hashlib import sha256
 import sys
 import zlib
